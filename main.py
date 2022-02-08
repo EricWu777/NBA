@@ -15,7 +15,7 @@ from predict import Prediction
 5. 最終將結果傳給 class Evaluate_Prediction，得到兩個模型的評估與預測結果
 
 '''
-#讓使用者可以輸入需要探討的年份
+#讓使用者輸入要探討的年份
 def get_input_game_year():
     try:
         input_game_year = input('Please type year by 1996 to 2021:')
@@ -100,15 +100,21 @@ if __name__ == '__main__':
     dtr_model = dtr_model_data.model()
 
     #給Evaluation結果，才有辦法繼續跑動
-    model_data_ = Evaluation(clean_train_data, clean_test_data, select_fectures)
-    cross_valid = model_data_.Cross_Valid_TSS_by_LR()
-   
-    data = Prediction(clean_train_data, clean_test_data, select_fectures)
+
+    #需要再把Evaluation的init_variable做修正
+    eval_lr_data = Evaluation(clean_train_data, clean_test_data, select_fectures, lin_mmodel)
+    cross_valid_by_lr = eval_lr_data.cross_valid_tss()
+
+    eval_dtr_data = Evaluation(clean_train_data, clean_test_data, select_fectures, dtr_model)
+    cross_valid_by_dtr = eval_dtr_data.cross_valid_tss()
+
+    data_lr = Prediction(clean_train_data, clean_test_data, select_fectures, lin_mmodel)
     print('Linear Regression model:')
-    prediction_lr = data.Predict_lr()
+    prediction_lr = data_lr.predict()
     
+    data_dtr = Prediction(clean_train_data, clean_test_data, select_fectures, dtr_model)
     print('Decision Tree Regression model:')
-    prediction_dtr = data.Predict_dtr()
+    prediction_dtr = data_dtr.predict()
     
    # print(prediction_dtr)
 

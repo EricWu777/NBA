@@ -14,6 +14,7 @@ class DTRModel(MachineLearning):
         DTR.fit(X_train, y_train)
         self.show('Decision', DTR ,X_train,y_train, X_valid, y_valid)
        
+        return DTR
 
         
 

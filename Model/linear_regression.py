@@ -17,6 +17,6 @@ class LRModel(MachineLearning):
         print('Coef:' , lin_mod.coef_)
 
         self.show('LinearRegression',lin_mod, X_train,y_train, X_valid, y_valid)
-       
+        return lin_mod
 
         
